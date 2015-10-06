@@ -50,40 +50,46 @@ CORE_CODEBASE_DIR=`pwd`/code-base/central-repo/websites/website-core/src/main/we
 
 #add new entries to this map when you want to generate above the fold css for a new url
 declare -A urls=( ['/']="gateway.css"
-					['/loan.html']="loan.css"
-					['/select.html']="select.css"
-					['/personal-loan.html']="personal-loan.css"
-					['/car-loan.html']="car-loan.css"
-					['/home-loan.html']="home-loan.css"
-					['/personal-loan.html?catStyleNeeded=true']="personal-loan-slide.css"
-					['/car-loan.html?catStyleNeeded=true']="car-loan-slide.css"
-					['/home-loan.html?catStyleNeeded=true']="home-loan-slide.css"
-					['/hdfc-personal-loan.html']="lw-personal-loan-fold.css"
-					['/axis-home-loan.html']="lw-home-loan-fold.css"
-					['/axis-car-loan.html']="lw-car-loan-fold.css"
-					['/credit-card.html']="credit-card.css"
-					['/credit-card.html?variant=slide']="credit-card-slide.css"
-					['/american-express-credit-card.html']="lw-credit-card-fold.css"
-					['/insurance.html']="insurance.css"
-					['/insurance/life-insurance.html']="life-insurance.css"
-					['/insurance/health-insurance.html']="health-insurance.css"
-					['/insurance/car-insurance.html']="car-insurance.css"
-					['/insurance/aegon-religare-life-insurance.html']="lw-term-life-insurance-fold.css"
-					['/insurance/apollo-munich-health-insurance.html']="lw-health-insurance-fold.css"
-					['/insurance/bajaj-allianz-car-insurance.html']="lw-car-insurance-fold.css"
-					['/fixed-deposit.html']="lw-fixed-deposit-fold.css"
-					['/fixed-deposit-rate.html']="lw-fixed-deposit-rate.css"
-					['/ifsc-code.html']="ifsc-code-landing.css"
-					['/ifsc-code/hdfc-bank.html']="ifsc-code-bank.css"
-					['/ifsc-code/hdfc-bank/tamil-nadu.html']="ifsc-code-state.css"
-					['/ifsc-code/hdfc-bank/tamil-nadu/chennai.html']="ifsc-code-city.css"
-					['/ifsc-code/hdfc-bank/tamil-nadu/chennai/chennai-nungambakkam-branch.html']="ifsc-code-branch.css"
-					['/finance-tools/emi-calculator.html']="emi-calculator.css"
-					['/finance-tools/personal-loan-emi-calculator.html']="emi-calculator-pl.css"
-					['/finance-tools/car-loan-emi-calculator.html']="emi-calculator-cl.css"
-					['/finance-tools/home-loan-emi-calculator.html']="emi-calculator-hl.css"
-					['/aboutus.html']="aboutus.css"
-					['/aboutus.html#careers']="careers.css")
+		  ['/loan.html']="loan.css"
+		  ['/select.html']="select.css"
+		  ['/personal-loan.html']="personal-loan.css"
+		  ['/car-loan.html']="car-loan.css"
+		  ['/home-loan.html']="home-loan.css"
+	  	  ['/personal-loan.html?catStyleNeeded=true']="personal-loan-slide.css"
+		  ['/car-loan.html?catStyleNeeded=true']="car-loan-slide.css"
+	          ['/home-loan.html?catStyleNeeded=true']="home-loan-slide.css"
+		  ['/hdfc-personal-loan.html']="lw-personal-loan-fold.css"
+		  ['/axis-home-loan.html']="lw-home-loan-fold.css"
+		  ['/axis-car-loan.html']="lw-car-loan-fold.css"
+		  ['/credit-card.html']="credit-card.css"
+		  ['/credit-card.html?variant=slide']="credit-card-slide.css"
+		  ['/american-express-credit-card.html']="lw-credit-card-fold.css"
+		  ['/insurance.html']="insurance.css"
+		  ['/insurance/life-insurance.html']="life-insurance.css"
+		  ['/insurance/health-insurance.html']="health-insurance.css"
+		  ['/insurance/car-insurance.html']="car-insurance.css"
+		  ['/insurance/aegon-religare-life-insurance.html']="lw-term-life-insurance-fold.css"
+		  ['/insurance/apollo-munich-health-insurance.html']="lw-health-insurance-fold.css"
+		  ['/insurance/bajaj-allianz-car-insurance.html']="lw-car-insurance-fold.css"
+		  ['/fixed-deposit.html']="lw-fixed-deposit-fold.css"
+		  ['/fixed-deposit-rate.html']="lw-fixed-deposit-rate.css"
+		  ['/fixed-deposit/hdfc-fixed-deposit-rate.html']="lw-fixed-deposit-rate-banks.css"
+		  ['/ifsc-code.html']="ifsc-code-landing.css"
+		  ['/ifsc-code/hdfc-bank.html']="ifsc-code-bank.css"
+		  ['/ifsc-code/hdfc-bank/tamil-nadu.html']="ifsc-code-state.css"
+		  ['/ifsc-code/hdfc-bank/tamil-nadu/chennai.html']="ifsc-code-city.css"
+		  ['/ifsc-code/hdfc-bank/tamil-nadu/chennai/chennai-nungambakkam-branch.html']="ifsc-code-branch.css"
+		  ['/finance-tools/emi-calculator.html']="emi-calculator.css"
+		  ['/personal-loan-emi-calculator.html']="emi-calculator-pl.css"
+		  ['/car-loan-emi-calculator.html']="emi-calculator-cl.css"
+		  ['/home-loan-emi-calculator.html']="emi-calculator-hl.css"
+		  ['/aboutus.html']="aboutus.css"
+		  ['/aboutus.html#careers']="careers.css"
+		  ['/insurance/two-wheeler-insurance.html']="lw-two-wheeler-insurance-fold.css"
+		  ['/insurance/home-insurance.html']="lw-term-home-insurance-fold.css"
+		  ['/savings-account/canara-bank-savings-account.html']="lw-savings-account.css"
+		  ['/insurance/max-bupa-health-insurance/heartbeat-family-first.html']="health-insurance-bank-plan.css"
+)
 
 #setup start
 cd $HOME_DIR
@@ -108,34 +114,48 @@ if [ $# -eq 2 ]
 fi
 
 errorurls=
+modes=("desktop" "mobile")
 for key in "${!urls[@]}"
 do
-        fullurl=$serverurl$key
-        outputFile=${urls["$key"]}
-        if [ -z "$outputFile" ];then
-            echo "No entry found for the url" $fullurl
-	    echo "If you are trying to generate css for a url that is not in the preconfigured list, please add an entry in urls map and then run me again"
-            exit 1
-        fi
-        echo "Starting to generate css for $fullurl"
-	phantomjs buildRequiredCss.js $fullurl $outputFile
-        if [  -f $OUTPUT_DIR/$outputFile ]; then
-		echo "Source css generated"
-		phantomjs $PENTHOUSE_DIR/penthouse.js $fullurl $OUTPUT_DIR/$outputFile > $ABOVE_FOLD_DIR/$outputFile
-		echo "Above the fold css generated"
-		node $HOME_DIR/minifycss.js $ABOVE_FOLD_DIR/$outputFile 
-        	echo "css minified"
-        else 
+        for mode in "${modes[@]}"
+        do
+        	if [ "$mode" == "desktop" ];then
+	        fullurl=$serverurl$key
+        	outputFile=${urls["$key"]}
+	        else
+                	if [[ $fullurl == *"?"* ]]
+			then
+				fullurl=$serverurl$key"&mobileSite=true"
+			else
+				fullurl=$serverurl$key"?mobileSite=true"
+			fi
+        		
+		fi
+	        if [ -z "$outputFile" ];then
+        	    echo "No entry found for the url" $fullurl
+		    echo "If you are trying to generate css for a url that is not in the preconfigured list, please add an entry in urls map and then run me again"
+        	    exit 1
+	        fi
+        	echo "Starting to generate $mode css for $fullurl" 
+		phantomjs buildRequiredCss.js $fullurl $outputFile $mode
+	        if [  -f $OUTPUT_DIR/$mode/$outputFile ]; then
+			echo "Source css generated"
+			phantomjs $PENTHOUSE_DIR/penthouse.js $fullurl $OUTPUT_DIR/$mode/$outputFile > $ABOVE_FOLD_DIR/$mode/$outputFile
+			echo "Above the fold css generated"
+			node $HOME_DIR/minifycss.js $ABOVE_FOLD_DIR/$mode/$outputFile 
+	        	echo "css minified"
+        	else 
                 errorurls+=$fullurl", "
-	fi
-        echo "============================================"
-
+		fi
+        	echo "============================================"
+	done
 done
 
 #copy the generated css to codebase directory
 if [ -z "$errorurls" ]; then
         #no errors, so proceeding to copy the files
-	cp $ABOVE_FOLD_DIR/* $MP_CODEBASE_DIR/above_the_fold
+	cp $ABOVE_FOLD_DIR/desktop/* $MP_CODEBASE_DIR/above_the_fold
+        cp -rf $ABOVE_FOLD_DIR/mobile/ $MP_CODEBASE_DIR/above_the_fold
 	echo "CSS files copied to codebase!!, Go ahead and commit the files"
 else
         echo "***************************************************************************"

@@ -7,13 +7,15 @@ var args = require('system').args;
 var page = require('webpage').create();
 var url = args[1];
 var outputFile = args[2];
+var mode=args[3];
 
 page.open(url,function(status){
 	
 	page.onConsoleMessage = function (msg) { console.log(msg); };
         if(status=='success'){
 		var fs = require('fs');
-		var targetFile = fs.workingDirectory+"/output/"+outputFile;
+ 		var targetFile;
+		targetFile = fs.workingDirectory+"/output/"+mode+"/"+outputFile;
 		var cssFileList = page.evaluate(function() {
 			var cssNodeList = document.querySelectorAll("link[type='text/css']");
 			var fileList="";
@@ -33,7 +35,6 @@ page.open(url,function(status){
 		for(var i=0;i<cssFileArray.length;i++){
 			var fileName = cssFileArray[i];
 			var filePath = fs.workingDirectory+fileName;
-			//console.log("Current file is"+" "+filePath);
                         try{
 				var content = fs.read(filePath);
 				fs.write(targetFile,content,'a');
